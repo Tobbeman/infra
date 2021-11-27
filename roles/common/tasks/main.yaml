@@ -1,0 +1,20 @@
+- name: Create infra group
+  become: yes
+  group:
+    name: "{{ infra_group }}"
+
+- name: Add user to infra group
+  become: yes
+  user:
+    name: "{{ lookup('env', 'USER') }}"
+    groups: "{{ infra_group }}"
+    append: yes
+
+- name: Create infra folder
+  become: yes
+  file: 
+    path: "{{ infra_dir }}"
+    state: directory
+    group: "{{ infra_group }}"
+    mode: 0775
+

@@ -1,0 +1,18 @@
+- hosts: all
+  vars:
+    infra_group: t-infra
+    infra_dir: /opt/t-infra
+  roles:
+    - role: common
+- hosts: podman
+  roles:
+    - role: podman
+- hosts: prometheus
+  vars:
+    infra_dir: /opt/t-infra
+    server:
+      version: v2.31.1
+    node_exporter:
+      version: v1.3.0
+  roles:
+    - role: prometheus

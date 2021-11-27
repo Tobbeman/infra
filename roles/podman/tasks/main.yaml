@@ -1,0 +1,25 @@
+- name: install podman
+  become: yes
+  package:
+    name: podman
+    state: present
+
+- name: configure storage
+  become: yes
+  copy:
+    src: roles/podman/files/storage.conf
+    dest: /etc/containers/storage.conf
+
+- name: configure registries
+  become: yes
+  copy:
+    src: roles/podman/files/registries.conf
+    dest: /etc/containers/registries.conf
+
+- name: allow ping from containers
+  become: yes
+  ansible.posix.sysctl:
+    name: net.ipv4.ping_group_range
+    value: '0 2000000'
+    state: present
+    sysctl_set: yes

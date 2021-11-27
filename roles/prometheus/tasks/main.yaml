@@ -1,0 +1,28 @@
+- name: Create directory for config
+  file:
+    name: "{{ infra_dir }}/prometheus"
+    state: directory
+
+- name: Create config for prometheus
+  template:
+    src: prometheus.j2
+    dest: "{{ infra_dir }}/prometheus/prometheus.yaml"
+
+- name: Run server
+  containers.podman.podman_container:
+    name: prometheus-server
+    image: prom/prometheus:{{ server.version }}
+    net: host
+    volume:
+      - "{{ infra_dir }}/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml:ro"
+
+- name: Run node-exporter
+  containers.podman.podman_container:
+    name: prometheus-node-exporter
+    image: prom/node-exporter:{{ node_exporter.version }}
+    pid: host
+    net: host
+    volume:
+      - /:/host:ro,rslave
+
+
