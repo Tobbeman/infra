@@ -4,6 +4,11 @@
     infra_dir: /opt/t-infra
   roles:
     - role: common
+- hosts: automated_updates
+  become: yes
+  roles:
+    - role: jnv.unattended-upgrades
+      unattended_automatic_reboot: true
 - hosts: podman
   roles:
     - role: podman
