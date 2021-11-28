@@ -6,7 +6,7 @@
 - name: Add user to infra group
   become: yes
   user:
-    name: "{{ lookup('env', 'USER') }}"
+    name: "{{ ansible_user }}"
     groups: "{{ infra_group }}"
     append: yes
 

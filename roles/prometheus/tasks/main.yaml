@@ -13,6 +13,7 @@
     name: prometheus-server
     image: prom/prometheus:{{ server.version }}
     net: host
+    state: present
     volume:
       - "{{ infra_dir }}/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml:ro"
 
@@ -22,6 +23,7 @@
     image: prom/node-exporter:{{ node_exporter.version }}
     pid: host
     net: host
+    state: present
     volume:
       - /:/host:ro,rslave
 
