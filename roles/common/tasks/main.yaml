@@ -1,20 +1,7 @@
-- name: Create infra group
-  become: yes
-  group:
-    name: "{{ infra_group }}"
+- name: install must have packages
+  package:
+    name:
+      - vim
 
-- name: Add user to infra group
-  become: yes
-  user:
-    name: "{{ ansible_user }}"
-    groups: "{{ infra_group }}"
-    append: yes
-
-- name: Create infra folder
-  become: yes
-  file: 
-    path: "{{ infra_dir }}"
-    state: directory
-    group: "{{ infra_group }}"
-    mode: 0775
-
+- name: include os specific
+  include_tasks: "{{ ansible_distribution }}.yaml"
