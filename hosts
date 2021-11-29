@@ -1,7 +1,2 @@
 [targets]
 192.168.1.229	ansible_user=infra
-
-[automated_updates]
-192.168.1.229
-[prometheus]
-192.168.1.229

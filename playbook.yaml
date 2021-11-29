@@ -1,11 +1,11 @@
 - hosts: all
   roles:
     - role: common
-- hosts: automated_updates
+- hosts: all
   become: yes
   roles:
     - role: jnv.unattended-upgrades
       unattended_automatic_reboot: true
-- hosts: prometheus
+- hosts: all
   roles:
     - role: prometheus
