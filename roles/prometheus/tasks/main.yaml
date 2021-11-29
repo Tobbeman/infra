@@ -1,32 +1,21 @@
-- name: Create directory for config
-  file:
-    name: "{{ infra_dir }}/prometheus"
-    state: directory
-    mode: 0664
+- name: install packages
+  become: yes
+  package:
+    name:
+      - prometheus
+      - prometheus-node-exporter
 
-- name: Create config for prometheus
+- name: create server config
+  become: yes
+  register: config
   template:
     src: prometheus.j2
-    dest: "{{ infra_dir }}/prometheus/prometheus.yaml"
+    dest: /etc/prometheus/prometheus.yml
     mode: 0664
 
-- name: Run server
-  containers.podman.podman_container:
-    name: prometheus-server
-    image: prom/prometheus:{{ server.version }}
-    net: host
-    state: present
-    volume:
-      - "{{ infra_dir }}/prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml:ro"
-
-- name: Run node-exporter
-  containers.podman.podman_container:
-    name: prometheus-node-exporter
-    image: prom/node-exporter:{{ node_exporter.version }}
-    pid: host
-    net: host
-    state: present
-    volume:
-      - /:/host:ro,rslave
-
-
+- name: restart server
+  become: yes
+  when: config.changed
+  service:
+    name: prometheus
+    state: restarted
