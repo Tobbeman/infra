@@ -9,12 +9,14 @@
   copy:
     src: roles/podman/files/storage.conf
     dest: /etc/containers/storage.conf
+    mode: 0644
 
 - name: configure registries
   become: yes
   copy:
     src: roles/podman/files/registries.conf
     dest: /etc/containers/registries.conf
+    mode: 0644
 
 - name: allow ping from containers
   become: yes
