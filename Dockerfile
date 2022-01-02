@@ -7,6 +7,6 @@ RUN useradd -ms /bin/bash ansible
 USER ansible
 WORKDIR /home/ansible/infra
 
-RUN ansible-galaxy install jnv.unattended-upgrades
+RUN ansible-galaxy install jnv.unattended-upgrades gekmihesg.openwrt
 
 CMD ["bash"]

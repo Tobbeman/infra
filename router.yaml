@@ -1,0 +1,8 @@
+- hosts: router
+  roles:
+    - gekmihesg.openwrt
+  tasks:
+    - name: install packages
+      opkg:
+        name: bash,vim
+        state: present
