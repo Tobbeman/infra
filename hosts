@@ -1,6 +1,9 @@
 [targets]
-nuc	ansible_host=192.168.1.229 ansible_user=infra
+nuc	ansible_host=192.168.1.223 ansible_user=root
 router 	ansible_host=192.168.1.1 ansible_user=root
 
 [openwrt]
 router
+
+[pve]
+nuc

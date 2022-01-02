@@ -1,0 +1,23 @@
+- hosts: pve
+  tasks:
+    - name: remove subscription repo
+      ansible.builtin.apt_repository:
+        repo: deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise
+        state: absent
+    - name: add no-subscription repo
+      ansible.builtin.apt_repository:
+        repo: deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
+        state: present
+
+    # Bug in default proxmox 7.1 iso
+    - name: check kernel
+      shell: uname -r | grep 5.13
+      register: _check_kernel
+      failed_when: _check_kernel.rc > 1
+    - name: install linux headers
+      ansible.builtin.package: 
+        name: pve-kernel-5.15
+        state: present
+      when: _check_kernel.rc == 0
+
+

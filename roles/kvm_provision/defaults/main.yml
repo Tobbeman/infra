@@ -1,0 +1,14 @@
+---
+macvtap_network_name: "macvtap-net"
+macvtap_network_host_interface: "enp2s0"
+base_image_name: debian-10-generic-amd64-20211011-792.qcow2
+base_image_url: https://cloud.debian.org/images/cloud/buster/20211011-792/debian-10-generic-amd64-20211011-792.qcow2
+base_image_sha: f3dac13104b4e28eb62c46cbbb1e30fc9c792834500f9101d477c19c258c31ff04850933ee0b3e63236eca38c854447d95a0ab45163c4a3fccf05f9dd95601a5
+libvirt_pool_dir: "/var/lib/libvirt/images"
+vm_name: vm
+vm_vcpus: 2
+vm_ram_mb: 2048
+vm_net: "macvtap-net"
+vm_user_pass: infra123
+cleanup_tmp: no
+ssh_key: /root/.ssh/id_rsa.pub

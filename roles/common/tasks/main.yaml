@@ -2,6 +2,7 @@
   package:
     name:
       - vim
+      - bash
 
 - name: include os specific
   include_tasks: "{{ ansible_distribution }}.yaml"

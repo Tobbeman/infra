@@ -1,0 +1,9 @@
+- name: Install must have packages
+  package:
+    name:
+      - ethtool
+
+- name: Emable WoL
+  ansible.builtin.command: ethtool -s {{ wol_interface }} wol g
+
+

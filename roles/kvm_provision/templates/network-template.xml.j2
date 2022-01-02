@@ -1,0 +1,7 @@
+<network>
+  <name>{{ macvtap_network_name }}</name>
+  <forward mode="bridge">
+    <interface dev="{{ macvtap_network_host_interface }}"/>
+  </forward>
+</network>
+

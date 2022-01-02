@@ -1,0 +1,11 @@
+#- hosts: all
+#  roles:
+#    - role: kvm_provision
+#      become: yes
+#      vars:
+#        vm_name: "media"
+#        ssh_key: ~/.ssh/id_ed25519.pub
+- hosts: all
+  roles:
+    - role: proxmox
+      become: yes

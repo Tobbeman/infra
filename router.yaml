@@ -7,5 +7,5 @@
   tasks:
     - name: install packages
       opkg:
-        name: bash,vim,luci-proto-wireguard,luci-app-wireguard
+        name: bash,vim,luci-proto-wireguard,luci-app-wireguard,diffutils
         state: present
