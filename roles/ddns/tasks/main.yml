@@ -1,0 +1,40 @@
+---
+- name: create directory
+  file:
+    path: "{{ ddns_install_dir }}"
+    state: directory
+
+- name: copy script
+  template:
+    src: script
+    dest: "{{ file_path }}"
+    mode: 0744
+
+# Hacky mess
+- name: check if schedule changed
+  shell: grep "{{ ddns_crontab_schedule }}" {{ ddns_crontab_file }} && [[ $(grep "{{ file_path }}" {{ ddns_crontab_file }} | wc -l) == 1 ]]
+  register: _check_schedule_change
+  failed_when: _check_schedule_change.rc > 1
+
+- name: remove old schedule
+  lineinfile:
+    path: "{{ ddns_crontab_file }}"
+    regexp: "{{ file_path }}"
+    state: absent
+  when: _check_schedule_change.rc != 0
+
+- name: add crontab
+  lineinfile:
+    path: "{{ ddns_crontab_file }}"
+    line: "{{ cron_job }}"
+    state: present
+  register: _add_crontab
+
+- name: enable cron
+  service:
+    name: cron
+    state: restarted
+    enabled: yes
+  when: _add_crontab.changed
+
+

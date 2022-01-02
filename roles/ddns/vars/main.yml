@@ -1,0 +1,8 @@
+---
+# ddns_url: string
+# ddns_wan_interface: string
+
+
+file_path: "{{ ddns_install_dir }}/script"
+cron_job: "{{ ddns_crontab_schedule }} {{ file_path }}"
+

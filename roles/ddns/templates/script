@@ -1,0 +1,28 @@
+#!/bin/bash
+
+set -e
+set -o nounset
+
+wan_interface="{{ ddns_wan_interface }}"
+ddns_url="{{ ddns_url }}"
+
+dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+wan_last_ip_file="${dir}/last_ip.txt"
+
+touch "$wan_last_ip_file"
+
+wan_current_ip=$(ip -4 addr show "$wan_interface" | grep inet | awk '{print $2}' | cut -d"/" -f 1)
+wan_last_ip=$(cat "$wan_last_ip_file")
+
+function log() {
+   logger -p notice -t ddns "$1"
+}
+
+if [[ "$wan_current_ip" != "$wan_last_ip" ]]; then
+    msg=$(curl -s "${ddns_url}")
+    log "Updated: ${msg}"
+    echo "$wan_current_ip" > "$wan_last_ip_file"
+else
+    log "No update needed"
+fi
+

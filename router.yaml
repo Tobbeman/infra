@@ -1,8 +1,11 @@
 - hosts: router
   roles:
-    - gekmihesg.openwrt
+    - role: gekmihesg.openwrt
+    - role: ddns
+      ddns_url: "{{ vault_ddns_url }}"
+      ddns_wan_interface: eth0
   tasks:
     - name: install packages
       opkg:
-        name: bash,vim
+        name: bash,vim,luci-proto-wireguard,luci-app-wireguard
         state: present

@@ -1,0 +1,4 @@
+---
+ddns_install_dir: /etc/ddns
+ddns_crontab_file: /etc/crontabs/root
+ddns_crontab_schedule: "0 1 * * *"
